@@ -25,7 +25,6 @@ def guardarArchivo(datos,encabezado,archivo):
         print("Cant_Ram: " + cant_ram + "\n")
         print("Precio: " + precio + "\n")
         archivo.write(marca + ", " + desc_producto.replace(",", "|") + ", " + cant_ram +", " +precio.replace(",", "") +"\n")
-    #print(dato)
     
 
 def scrapper(url,cant_paginas):
@@ -41,24 +40,13 @@ def scrapper(url,cant_paginas):
         datos = sopa_html.findAll("div", {"class": "item-container"})
         guardarArchivo(datos,encabezado,archivo)
         acum = acum+1
-        print("Leyendo Pagina #"+str(acum)+ "de "+str(cant_paginas))
+        print("Leyendo Pagina # "+str(acum)+ " de "+str(cant_paginas))
     archivo.close()
     
 
-def test():
-    url = "https://www.newegg.com/p/pl?d=GPU&page=1"
-    uClient = uReq(url)
-    page_soup = soup(uClient.read(), "html.parser")
-    uClient.close()
-    
-    
-
 def main():
-    #url = "http://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=-1&IsNodeId=1&Description=GTX&bop=And&Page=1&PageSize=36&order=BESTMATCH"
-    #url = "https://www.newegg.com/p/pl?d=GPU&page=1"
     url = "https://www.newegg.com/p/pl?d=GPU"
     scrapper(url,100)
-    #test()
 
 if __name__ == '__main__':
     main()
