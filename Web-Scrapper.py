@@ -1,3 +1,4 @@
+import schedule
 from bs4 import BeautifulSoup as soup  # Lector HTML
 from urllib.request import urlopen as uReq  # Web client
 
@@ -27,7 +28,7 @@ def parser(dato):
     resultado = marca + ", " + desc_producto.replace(",", "|") + ", " +precio.replace(",", "") +"\n"
     return resultado
     
-
+    
 def scrapper(url,cant_paginas, nombre_archivo):
     acum = 1
     encabezado = "Marca,Desc_Producto,Precio\n"
@@ -35,19 +36,24 @@ def scrapper(url,cant_paginas, nombre_archivo):
     archivo.write(encabezado)
     while (acum <= cant_paginas):
         url = url + '&page='+str(acum)
-        uClient = uReq(url)
-        sopa_html = soup(uClient.read(), "html.parser")
-        uClient.close()
-        datos = sopa_html.findAll("div", {"class": "item-container"})
+        sopa_html = obtener_html(url)
+        datos = sopa_html.findAll("div", {"class": "goods-container"})
         guardarArchivo(datos,archivo)
         acum = acum+1
         print("Leyendo Pagina # "+str(acum)+ " de "+str(cant_paginas))
     archivo.close()
-    
+
+def obtener_html(url):
+    uClient = uReq(url)
+    sopa_html = soup(uClient.read(), "html.parser")
+    uClient.close()
+    return sopa_html
 
 def request(item_name, amount_pages, nombre_archivo):
     url = "https://www.newegg.com/p/pl?d="+item_name
     scrapper(url,amount_pages,nombre_archivo)
 
 if __name__ == '__main__':
-    request("GPU",10,"GPU.csv")
+    urls = ["MotherBoard", "CPU","GPU", "RAM", "CASE", "PSU", "SSD", "HDD"]
+    for part_name in urls:
+        request(part_name, 1, part_name+".csv")
