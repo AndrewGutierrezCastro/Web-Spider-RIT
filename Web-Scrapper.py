@@ -37,10 +37,11 @@ def scrapper(url,cant_paginas, nombre_archivo):
     while (acum <= cant_paginas):
         url = url + '&page='+str(acum)
         sopa_html = obtener_html(url)
-        datos = sopa_html.findAll("div", {"class": "goods-container"})
+        datos = sopa_html.findAll("div", {"class": "item-container"})
         guardarArchivo(datos,archivo)
-        acum = acum+1
+        print(url)
         print("Leyendo Pagina # "+str(acum)+ " de "+str(cant_paginas))
+        acum = acum+1
     archivo.close()
 
 def obtener_html(url):
