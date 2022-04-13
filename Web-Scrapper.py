@@ -59,15 +59,18 @@ def obtener_html(url):
 
 def request(item_name, amount_pages, nombre_archivo):
     url = "https://www.newegg.com/p/pl?d="+item_name
-    scrapper(url,amount_pages,nombre_archivo,True,100)
+    activar_espera = True
+    esperar_segundos = 25
+    scrapper(url,amount_pages,nombre_archivo,activar_espera,esperar_segundos)
 
 def main():
     print("---------Corriendo Programa---------")
+    cant_paginas = 2
     urls = ["MotherBoard", "CPU","GPU", "RAM", "CASE", "PSU", "SSD", "HDD"]
     for part_name in urls:
         rand_segundos = random.randrange(0,10)
         time.sleep(rand_segundos)
-        proceso = threading.Thread(target =request, args=(part_name, 2, part_name+".csv"))
+        proceso = threading.Thread(target =request, args=(part_name, cant_paginas, part_name+".csv"))
         proceso.start()
     proceso.join()
     print("---------Programa Terminado---------")
