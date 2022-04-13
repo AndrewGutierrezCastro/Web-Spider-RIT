@@ -1,5 +1,8 @@
+from tracemalloc import start
 import schedule
 import time
+import random
+import threading
 from bs4 import BeautifulSoup as soup  # Lector HTML
 from urllib.request import urlopen as uReq  # Web client
 
@@ -36,9 +39,6 @@ def scrapper(url,cant_paginas, nombre_archivo,activar_espera,espera_segundos):
     archivo = open(nombre_archivo, "w+")
     archivo.write(encabezado)
     while (acum <= cant_paginas):
-        if activar_espera:
-            time.sleep(espera_segundos)
-            print("Esperando..." +str(espera_segundos)+ "segundos")
         url = url + '&page='+str(acum)
         sopa_html = obtener_html(url)
         datos = sopa_html.findAll("div", {"class": "item-container"})
@@ -46,6 +46,9 @@ def scrapper(url,cant_paginas, nombre_archivo,activar_espera,espera_segundos):
         print(url)
         print("Leyendo Pagina # "+str(acum)+ " de "+str(cant_paginas))
         acum = acum+1
+        if activar_espera and acum <= cant_paginas:
+            print("Esperando..." +str(espera_segundos)+ "segundos")
+            time.sleep(espera_segundos)
     archivo.close()
 
 def obtener_html(url):
@@ -59,13 +62,23 @@ def request(item_name, amount_pages, nombre_archivo):
     scrapper(url,amount_pages,nombre_archivo,True,100)
 
 def main():
+    print("---------Corriendo Programa---------")
     urls = ["MotherBoard", "CPU","GPU", "RAM", "CASE", "PSU", "SSD", "HDD"]
-
     for part_name in urls:
-        request(part_name, 2, part_name+".csv")
+        rand_segundos = random.randrange(0,10)
+        time.sleep(rand_segundos)
+        proceso = threading.Thread(target =request, args=(part_name, 2, part_name+".csv"))
+        proceso.start()
+    proceso.join()
+    print("---------Programa Terminado---------")
 
 if __name__ == '__main__':
-    schedule.every().monday().do(main)
+    #schedule.every().monday.do(main)
+    schedule.every(5).to(10).minutes.do(main)
     while True:
+        print("---------Esperando a correr el programa---------")
         schedule.run_pending()
-        time.sleep(1)
+        segundos_faltantes = schedule.idle_seconds()
+        print(str(schedule.get_jobs()))
+        print("---------Faltan: " +str(round(segundos_faltantes))+ " segundos---------")
+        time.sleep(round(segundos_faltantes/5))
