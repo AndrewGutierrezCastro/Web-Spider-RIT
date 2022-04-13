@@ -1,4 +1,5 @@
 import schedule
+import time
 from bs4 import BeautifulSoup as soup  # Lector HTML
 from urllib.request import urlopen as uReq  # Web client
 
@@ -29,12 +30,15 @@ def parser(dato):
     return resultado
     
     
-def scrapper(url,cant_paginas, nombre_archivo):
+def scrapper(url,cant_paginas, nombre_archivo,activar_espera,espera_segundos):
     acum = 1
     encabezado = "Marca,Desc_Producto,Precio\n"
     archivo = open(nombre_archivo, "w+")
     archivo.write(encabezado)
     while (acum <= cant_paginas):
+        if activar_espera:
+            time.sleep(espera_segundos)
+            print("Esperando..." +str(espera_segundos)+ "segundos")
         url = url + '&page='+str(acum)
         sopa_html = obtener_html(url)
         datos = sopa_html.findAll("div", {"class": "item-container"})
@@ -52,9 +56,16 @@ def obtener_html(url):
 
 def request(item_name, amount_pages, nombre_archivo):
     url = "https://www.newegg.com/p/pl?d="+item_name
-    scrapper(url,amount_pages,nombre_archivo)
+    scrapper(url,amount_pages,nombre_archivo,True,100)
+
+def main():
+    urls = ["MotherBoard", "CPU","GPU", "RAM", "CASE", "PSU", "SSD", "HDD"]
+
+    for part_name in urls:
+        request(part_name, 2, part_name+".csv")
 
 if __name__ == '__main__':
-    urls = ["MotherBoard", "CPU","GPU", "RAM", "CASE", "PSU", "SSD", "HDD"]
-    for part_name in urls:
-        request(part_name, 1, part_name+".csv")
+    schedule.every().monday().do(main)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
