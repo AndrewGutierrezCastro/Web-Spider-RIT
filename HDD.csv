@@ -28,6 +28,7 @@ Seagate, IronWolf Pro 18TB NAS Hard Drive 7200 RPM 256MB Cache CMR SATA 6.0Gb/s 
 Seagate, IronWolf Pro 10TB NAS Hard Drive 7200 RPM 256MB Cache CMR SATA 6.0Gb/s 3.5" Internal HDD ST10000NE0008, 248
 WD, Blue WD80EAZZ 8TB 5640 RPM 128MB Cache SATA 6.0Gb/s 3.5" Internal Hard Drive - OEM, 139
 Seagate, BarraCuda ST3000DM008 3TB 7200 RPM 64MB Cache SATA 6.0Gb/s 3.5" Hard Drive Bare Drive, 68
+WD, Blue 6TB Desktop Hard Disk Drive - 5400 RPM SATA 6Gb/s 256MB Cache 3.5 Inch - WD60EZAZ, 95
 Seagate, IronWolf 4TB NAS Hard Drive 5900 RPM 64MB Cache SATA 6.0Gb/s CMR 3.5" Internal HDD for RAID Network Attached Storage ST4000VN008 - OEM, 82
 Seagate, FireCuda Gaming SSHD 2TB 7200 RPM 64MB Cache SATA 6.0Gb/s 3.5" Internal Hard Drive ST2000DX002, 69
 Seagate, BarraCuda ST500DM009 500GB 7200 RPM 32MB Cache SATA 6.0Gb/s 3.5" Hard Drive Bare Drive, 30
@@ -37,7 +38,6 @@ Seagate, IronWolf Pro 8TB NAS Hard Drive 7200 RPM 256MB Cache CMR SATA 6.0Gb/s 3
 WD, Red Plus 14TB NAS Hard Disk Drive - 7200 RPM Class SATA 6Gb/s| CMR| 512MB Cache| 3.5 Inch - WD140EFGX, NA
 WD, Red Plus 8TB CMR NAS Hard Drive HDD - 5640 RPM| SATA 6 Gb/s| 128MB Cache| 3.5" - WD80EFZZ - OEM, 169
 Seagate, IronWolf 6TB NAS Hard Drive 7200 RPM 256MB Cache SATA 6.0Gb/s CMR 3.5" Internal HDD for RAID Network Attached Storage ST6000VN0033, 170
-WD, Blue 6TB Desktop Hard Disk Drive - 5400 RPM SATA 6Gb/s 256MB Cache 3.5 Inch - WD60EZAZ, 92
 Seagate, Exos X16 12TB SATA 6Gb/s 7200RPM 3.5" Enterprise HDD (ST12000NM000G), 169
 Seagate, 14TB HDD Exos X16 7200 RPM SATA 6Gb/s 256MB Cache 3.5-Inch Enterprise Hard Drive — ST14000NM001G, 199
 Seagate, Exos 16TB Enterprise HDD X18 SATA 6Gb/s 512e/4Kn 7200 RPM 256MB Cache 3.5" Internal Hard Drive (ST16000NM000J), 239
@@ -67,6 +67,7 @@ Seagate, IronWolf Pro 18TB NAS Hard Drive 7200 RPM 256MB Cache CMR SATA 6.0Gb/s 
 Seagate, IronWolf Pro 10TB NAS Hard Drive 7200 RPM 256MB Cache CMR SATA 6.0Gb/s 3.5" Internal HDD ST10000NE0008, 248
 WD, Blue WD80EAZZ 8TB 5640 RPM 128MB Cache SATA 6.0Gb/s 3.5" Internal Hard Drive - OEM, 139
 Seagate, BarraCuda ST3000DM008 3TB 7200 RPM 64MB Cache SATA 6.0Gb/s 3.5" Hard Drive Bare Drive, 68
+WD, Blue 6TB Desktop Hard Disk Drive - 5400 RPM SATA 6Gb/s 256MB Cache 3.5 Inch - WD60EZAZ, 95
 Seagate, IronWolf 4TB NAS Hard Drive 5900 RPM 64MB Cache SATA 6.0Gb/s CMR 3.5" Internal HDD for RAID Network Attached Storage ST4000VN008 - OEM, 82
 Seagate, FireCuda Gaming SSHD 2TB 7200 RPM 64MB Cache SATA 6.0Gb/s 3.5" Internal Hard Drive ST2000DX002, 69
 Seagate, BarraCuda ST500DM009 500GB 7200 RPM 32MB Cache SATA 6.0Gb/s 3.5" Hard Drive Bare Drive, 30
@@ -76,4 +77,3 @@ Seagate, IronWolf Pro 8TB NAS Hard Drive 7200 RPM 256MB Cache CMR SATA 6.0Gb/s 3
 WD, Red Plus 14TB NAS Hard Disk Drive - 7200 RPM Class SATA 6Gb/s| CMR| 512MB Cache| 3.5 Inch - WD140EFGX, NA
 WD, Red Plus 8TB CMR NAS Hard Drive HDD - 5640 RPM| SATA 6 Gb/s| 128MB Cache| 3.5" - WD80EFZZ - OEM, 169
 Seagate, IronWolf 6TB NAS Hard Drive 7200 RPM 256MB Cache SATA 6.0Gb/s CMR 3.5" Internal HDD for RAID Network Attached Storage ST6000VN0033, 170
-WD, Blue 6TB Desktop Hard Disk Drive - 5400 RPM SATA 6Gb/s 256MB Cache 3.5 Inch - WD60EZAZ, 92
