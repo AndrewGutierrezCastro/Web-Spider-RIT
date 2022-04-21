@@ -12,8 +12,10 @@ def guardarArchivo(datos,archivo):
         archivo.write(informacionParseada)
 
 def parser(dato):
+    
     informacion = dato.find("a",class_="item-title").text.split(' ',1)
     try:
+        url_producto = dato.find("a",class_="item-img").get("href")
         info_producto = dato.findAll("div", {"class": "item-info"})
         info_precio = info_producto[0].findAll("ul",{"class":"price"})
         if(len(info_precio) > 0):
@@ -29,21 +31,22 @@ def parser(dato):
     print("Marca: " + marca + "\n")
     print("Desc_Producto: " + desc_producto + "\n")
     print("Precio: " + precio + "\n")
-    resultado = marca + ", " + desc_producto.replace(",", "|") + ", " +precio.replace(",", "") +"\n"
+    print("Link " + url_producto + "\n")
+    resultado = marca + ", " + desc_producto.replace(",", "|") + ", " +precio.replace(",", "") + ", " + url_producto + "\n"
     return resultado
     
     
 def scrapper(url,cant_paginas, nombre_archivo,activar_espera,espera_segundos):
     acum = 1
-    encabezado = "Marca,Desc_Producto,Precio\n"
+    encabezado = "Marca,Desc_Producto,Precio,URL_Producto\n"
     archivo = open(nombre_archivo, "w+")
     archivo.write(encabezado)
     while (acum <= cant_paginas):
-        url = url + '&page='+str(acum)
-        sopa_html = obtener_html(url)
+        url_temp = url+str(acum)
+        sopa_html = obtener_html(url_temp)
         datos = sopa_html.findAll("div", {"class": "item-container"})
         guardarArchivo(datos,archivo)
-        print(url)
+        print(url_temp)
         print("Leyendo Pagina # "+str(acum)+ " de "+str(cant_paginas))
         acum = acum+1
         if activar_espera and acum <= cant_paginas:
@@ -58,14 +61,14 @@ def obtener_html(url):
     return sopa_html
 
 def request(item_name, amount_pages, nombre_archivo):
-    url = "https://www.newegg.com/p/pl?d="+item_name
+    url = "https://www.newegg.com/p/pl?d="+item_name +'&page='
     activar_espera = True
     esperar_segundos = 25
     scrapper(url,amount_pages,nombre_archivo,activar_espera,esperar_segundos)
 
 def main():
     print("---------Corriendo Programa---------")
-    cant_paginas = 2
+    cant_paginas = 60
     urls = ["MotherBoard", "CPU","GPU", "RAM", "CASE", "PSU", "SSD", "HDD"]
     for part_name in urls:
         rand_segundos = random.randrange(0,10)
@@ -76,8 +79,8 @@ def main():
     print("---------Programa Terminado---------")
 
 if __name__ == '__main__':
-    schedule.every().monday.do(main)
-    #schedule.every(5).to(10).minutes.do(main)
+    #schedule.every().monday.do(main)
+    schedule.every(5).to(10).minutes.do(main)
     while True:
         print("---------Esperando a correr el programa---------")
         schedule.run_pending()
