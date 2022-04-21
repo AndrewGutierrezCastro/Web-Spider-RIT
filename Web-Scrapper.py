@@ -79,8 +79,8 @@ def main():
     print("---------Programa Terminado---------")
 
 if __name__ == '__main__':
-    #schedule.every().monday.do(main)
-    schedule.every(5).to(10).minutes.do(main)
+    schedule.every().monday.do(main)
+    #schedule.every(5).to(10).minutes.do(main)
     while True:
         print("---------Esperando a correr el programa---------")
         schedule.run_pending()
