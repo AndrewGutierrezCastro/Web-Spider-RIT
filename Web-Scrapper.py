@@ -32,7 +32,7 @@ def parser(dato):
     print("Desc_Producto: " + desc_producto + "\n")
     print("Precio: " + precio + "\n")
     print("Link " + url_producto + "\n")
-    resultado = marca + ", " + desc_producto.replace(",", "|") + ", " +precio.replace(",", "") + ", " + url_producto + "\n"
+    resultado = marca.replace(",", "") + ", " + desc_producto.replace(",", "") + ", " +precio.replace(",", "") + ", " + url_producto + "\n"
     return resultado
     
     
