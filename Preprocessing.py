@@ -10,8 +10,8 @@ hashmapData = {}
 def tokenizer(string):
     return word_tokenize(string)
 
-def denoise_text(wordsList, regexPattern):
-    return re.findall(regexPattern, wordsList)
+def denoise_text(stringWords, regexPattern):
+    return re.findall(regexPattern, stringWords)
 
 def load_info():
     global hashmapData
@@ -21,6 +21,10 @@ def load_info():
     
 
 def preprocessing():
-    load_info()
+    global hashmapData
     #TODO denoise_text for each file
     
+
+if __name__ == '__main__':
+    print("Preprocessing version 0.1 running....")
+    preprocessing()
