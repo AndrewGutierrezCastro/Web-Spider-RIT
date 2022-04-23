@@ -4,3 +4,4 @@ CPUPATTERN =  r"celeron.\w+|i3|i5|i7|core.\d.duo|core.\d.quad|\d.\d.Ghz|LGA.\d{3
 GPUPATTERN = r"amd|nvidia|\d{1,3}gb|gddr\dx?|pci.express.\d.\d|gt.?\d{1,4}|geforce|gtx.?\d{2,4}.?t?i?|radeon|rx.?\d{2,4}.?x?t?|rtx.?\d{4}.?t?i?|x\d\d|crossfirex|sli|quadro.?\w\d{3,5}|m\w{3,5}..tx|\w+.?fan|dual.?\w+|support.\w+|\w+.?profile|\w.?sync|gaming|\d{2,4}.?bit"
 HDDPATTERN = r"([0-9]+[.])*[0-9]{1,9}(tb|mb.cache|gb.s|.rpm)"
 PSUPATTERN = r"[0-9]{1,9}.w|(gold|silver|platinum|titanium|bronze)"
+SSDPATTERN = r"([0-9]+[.])*[0-9]{1,9}(gb|tb|mb.cache|gb.s)|(NVMe|m[.]2)"
