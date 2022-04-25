@@ -5,3 +5,4 @@ GPUPATTERN = r"amd|nvidia|\d{1,3}gb|gddr\dx?|pci.express.\d.\d|gt.?\d{1,4}|gefor
 HDDPATTERN = r"([0-9]+[.])*[0-9]{1,9}(tb|mb.cache|gb.s|.rpm)"
 PSUPATTERN = r"[0-9]{1,9}.w|(gold|silver|platinum|titanium|bronze)"
 SSDPATTERN = r"([0-9]+[.])*[0-9]{1,9}(gb|tb|mb.cache|gb.s)|(NVMe|m[.]2)"
+MOTHERBOARDPATTERN = r"(lga.|fm|am)[0-9]{1,9}|(micro.|mini.)?atx|(intel|AMD)"
