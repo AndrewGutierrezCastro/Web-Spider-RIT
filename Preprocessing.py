@@ -14,7 +14,7 @@ FILENAME = {"CASE":RegexPatterns.CASEPATTERN,
 FILETYPE = ".csv"
 
 hashmapData = {}
-
+totalMatches = 0
 def denoise_text(stringWords, regexPattern):
     return re.findall(regexPattern, stringWords, re.IGNORECASE)
 
@@ -26,17 +26,22 @@ def load_info():
     
 
 def preprocessing():
-    global hashmapData
+    global hashmapData, totalMatches
     for name in hashmapData.keys():
         data = hashmapData[name]
         descriptionList = data.Desc_Producto.tolist()
+        result = []
         for i in descriptionList:
-            result = denoise_text(i, FILENAME[name])
-            hashmapData[name] = result
-            #print(result)
+            result.append( denoise_text(i, FILENAME[name]) )
+        totalMatches += len(result)
+        hashmapData[name] = result
 
 if __name__ == '__main__':
     print("Preprocessing version 0.1 running....")
     load_info()
     preprocessing()
-    print(json.dumps(hashmapData, sort_keys=True, indent=4))
+    json = json.dumps(hashmapData, sort_keys=True, indent=4)
+    file = open("result.json","w")
+    file.write(json)
+    file.close() 
+    print(str(totalMatches) + " total matches!!!. The JSON file was writed!!" )
