@@ -1,7 +1,5 @@
 import re
 import json
-
-from attr import has
 import RegexPatterns
 import pandas as pd
 
@@ -34,7 +32,8 @@ def preprocessing():
         descriptionList = data.Desc_Producto.tolist()
         for i in descriptionList:
             result = denoise_text(i, FILENAME[name])
-            print(result)
+            hashmapData[name] = result
+            #print(result)
 
 if __name__ == '__main__':
     print("Preprocessing version 0.1 running....")
