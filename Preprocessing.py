@@ -34,6 +34,7 @@ def preprocessing():
         descriptionList = data.Desc_Producto.tolist()
         for i in descriptionList:
             result = denoise_text(i, FILENAME[name])
+            hashmapData[name] = result
             print(result)
 
 if __name__ == '__main__':
