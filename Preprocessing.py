@@ -5,12 +5,12 @@ from attr import has
 import RegexPatterns
 import pandas as pd
 
-FILENAME = {"CASE":RegexPatterns.CASEPATTERNATTERN,
-            "CPU":RegexPatterns.CPUPATTERNTERN,
-            "GPU":RegexPatterns.GPUPATTERNATTERN,
-            "HDD":RegexPatterns.HDDPATTERNDPATTERN,
-            "MotherBoard":RegexPatterns.MOTHERBOARDBPATTERN,
-            "PSU":RegexPatterns.PSUPATTERNTERN,
+FILENAME = {"CASE":RegexPatterns.CASEPATTERN,
+            "CPU":RegexPatterns.CPUPATTERN,
+            "GPU":RegexPatterns.GPUPATTERN,
+            "HDD":RegexPatterns.HDDPATTERN,
+            "MotherBoard":RegexPatterns.MOTHERBOARDPATTERN,
+            "PSU":RegexPatterns.PSUPATTERN,
             "RAM":RegexPatterns.RAMPATTERN,
             "SSD":RegexPatterns.SSDPATTERN}
 FILETYPE = ".csv"
