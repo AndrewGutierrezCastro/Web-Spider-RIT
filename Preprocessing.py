@@ -3,7 +3,8 @@ import json #Recipiente de archivos
 import RegexPatterns #Para poder manejar las expresiones del regex
 import pandas as pd #Para poder manipular los datos de codigo
 
-#LIsta de los distintos archivos del RegexPatterns
+from invertedIndex import invertIndex
+
 FILENAME = {"CASE":RegexPatterns.CASEPATTERN,
             "CPU":RegexPatterns.CPUPATTERN,
             "GPU":RegexPatterns.GPUPATTERN,
@@ -40,7 +41,12 @@ def preprocessing():
         totalMatches += len(result)
         hashmapData[name] = result
 
-if __name__ == '__main__':
+def makeQuery(query=["ATX", "Mid-Tower"]):
+    invertedIndex, documents = invertIndex(hashmapData, query)
+
+    print(invertedIndex.keys(), [ len(i) for i in invertedIndex.values()])
+
+def main():
     print("Preprocessing version 0.1 running....")
     load_info()
     preprocessing()
@@ -49,3 +55,8 @@ if __name__ == '__main__':
     file.write(json)
     file.close() 
     print(str(totalMatches) + " total matches!!!. The JSON file was writed!!" )
+    makeQuery(["ATX", "Mid-tower","CPU","8GB","DDR4"])
+
+
+if __name__ == '__main__':
+    main()
