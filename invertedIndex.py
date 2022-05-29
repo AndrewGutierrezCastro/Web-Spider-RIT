@@ -8,7 +8,7 @@ def mergeDocuments(hashMap):
         documents = hashMap[key]
         result = result + documents
     return result
-
+    #TODO Christian ordenar lista y aplicar formulas.
 
 def invertIndex(hashMap={}, query=["ATX", "Mid-Tower"]):
     '''
