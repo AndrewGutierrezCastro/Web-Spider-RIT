@@ -17,6 +17,7 @@ FILETYPE = ".csv"
 
 hashmapData = {}
 totalMatches = 0
+documents = []
 # Con ayuda del regex, lo que hace es filtar de una manera mas limpia la informacion de los
 # distintos componentes. Configurada cada una de ellas en el archivo de RegexPatterns
 
@@ -49,6 +50,7 @@ def preprocessing():
 
 
 def makeInvertedIndex(query=["ATX", "Mid-Tower"]):
+    global documents
     invertedIndex, documents = invertIndex(hashmapData, query)
     fileContent = json.dumps(invertedIndex, sort_keys=True, indent=4)
     saveFile("invertedIndex.json", fileContent)
