@@ -37,27 +37,29 @@ def calc_peso(tipo_idf, tipo_tf, freq,maxi,lista_documentos,lista_docus_encontra
     Return: Int
 '''
 def calc_peso(tipo_idf, tipo_tf, freq,k,maxi,lista_documentos,lista_docus_encontrado):
-    resultado = calc_idf(tipo_idf,lista_documentos,lista_docus_encontrado,maxi) * calc_tf(tipo_tf,freq,k)
+    resultado = calc_idf(tipo_idf,lista_documentos,lista_docus_encontrado,maxi) * calc_tf(tipo_tf,freq,k,maxi)
     return resultado
 '''
     Funcion de calculo tf, el cual da la importancia del termino en el documento
     Tipo: binario, logaritmica, doble, k, frecuencia
     Frequencia: La frequencia de un termino en un documento
-    Args: tipo(String), frequencia(Int)
+    Max(i): Cantidad de terminos en un documento
+    Args: tipo(String), frequencia(Int), maxi(Int)
     Return: Int
 '''
-def calc_tf(tipo,freq):
-    return calc_tf(tipo,freq,1)
+def calc_tf(tipo,freq,maxi):
+    return calc_tf(tipo,freq,1,maxi)
 
 '''
     Funcion de calculo tf, el cual da la importancia del termino en el documento
     Tipo: binario, logaritmica, doble, k, frecuencia
     Frequencia: La frequencia de un termino en un documento
     K: Una constante cualquierda
-    Args: tipo(String), frequencia(Int), k(Int)
+    Max(i): Cantidad de terminos en un documento
+    Args: tipo(String), frequencia(Int), k(Int), maxi(Int)
     Return: Int
 '''
-def calc_tf(tipo,freq,k):
+def calc_tf(tipo,freq,k,maxi):
     if tipo =="binario" :
         resultado = calc_tf_bin(freq)
     elif tipo == "logaritmica":
