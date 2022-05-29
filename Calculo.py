@@ -2,13 +2,16 @@ import numpy as np
 import glob
 import os
 
-def calc_idf(list_resultados,extencion):
+def calc_idf_hard(list_resultados,extencion):
     locacion2 = os.getcwd()+"/*."+extencion
     list_docus =glob.glob(locacion2)
     cant_docus = len(list_docus)
     cant_result =len(list_resultados)
     resultado = np.log2(cant_docus/cant_result)
     return resultado
+
+def calc_peso(tipo_idf, tipo_tf, freq,maxi,):
+    return calc_idf() * calc_tf()
 
 def calc_tf(tipo,freq):
     return calc_tf(tipo,freq,1)
@@ -47,24 +50,25 @@ def calc_tf_double_k(freq,maxi,k):
     return resultado
 
 
-def calc_idf(tipo,freq,k):
+def calc_idf(tipo,list_docus,lista_docus_encontrado):
+    return calc_idf(tipo,list_docus,lista_docus_encontrado,1)
+
+def calc_idf(tipo,list_docus,lista_docus_encontrado,cant_terminos):
     
-    locacion2 = os.getcwd()+"/*."+extencion
-    list_docus =glob.glob(locacion2)
-    
-    cant_docus = len(list_docus)
-    cant_result =len(list_resultados)
+    cant_documentos = len(list_docus)
+    cant_doccumentos_encontrado = len(lista_docus_encontrado)
+    maxi = cant_terminos
 
     if tipo =="unaria" :
         resultado = calc_idf_unaria()
     elif tipo == "suavizada":
-        resultado = calc_idf_inversa_suavi()
+        resultado = calc_idf_inversa_suavi(cant_documentos,cant_doccumentos_encontrado)
     elif tipo == "maxima":
-        resultado = calc_idf_inversa_max(freq,maxi)
+        resultado = calc_idf_inversa_max(cant_doccumentos_encontrado,maxi)
     elif tipo ==  "probabilistica":
-        resultado = calc_idf_inversa_prob(freq,maxi,k)
+        resultado = calc_idf_inversa_prob(cant_documentos,cant_doccumentos_encontrado)
     else:
-        resultado = calc_idf_inversa(freq)
+        resultado = calc_idf_inversa(cant_documentos,cant_doccumentos_encontrado)
     return resultado
 
 def calc_idf_unaria():
@@ -83,8 +87,8 @@ def calc_idf_inversa_max(cant_doccumentos_encontrado,maxi):
     resultado = np.log2(1 + ((( cant_doccumentos_encontrado * maxi) / cant_doccumentos_encontrado )))
     return resultado
 
-def calc_idf_inversa_prob(cant_documentos,cant_doccumentos_encontrado,maxi):
+def calc_idf_inversa_prob(cant_documentos,cant_doccumentos_encontrado):
     resultado = np.log2(( cant_documentos - cant_doccumentos_encontrado ) / cant_doccumentos_encontrado )
     return resultado
 
-print(calc_idf([2,3,4],"csv"))
+print(calc_idf_hard([2,3,4],"csv"))
