@@ -72,6 +72,5 @@ def main():
     print(str(totalMatches) + " total matches!!!. The JSON file was writed!!")
     makeInvertedIndex(["ATX", "Mid-tower", "CPU", "8GB", "DDR4"])
 
-
 if __name__ == '__main__':
     main()

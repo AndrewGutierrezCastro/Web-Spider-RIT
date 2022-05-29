@@ -8,7 +8,8 @@ def mergeDocuments(hashMap):
         documents = hashMap[key]
         result = result + documents
     return result
-    #TODO Christian ordenar lista y aplicar formulas.
+    # TODO Christian ordenar lista y aplicar formulas.
+
 
 def invertIndex(hashMap={}, query=["ATX", "Mid-Tower"]):
     '''
@@ -16,22 +17,23 @@ def invertIndex(hashMap={}, query=["ATX", "Mid-Tower"]):
     las palabras a consultar
     '''
     invertedIndex = {}
-    #Se deja cada palabra de la consulta en minuscula
+    # Se deja cada palabra de la consulta en minuscula
     query = [word.lower() for word in query]
-    #Generar una lista con todos los documentos
+    # Generar una lista con todos los documentos
     documents = mergeDocuments(hashMap)
-    #Por cada documento en la lista
+    # Por cada documento en la lista
     for index in range(len(documents)):
         document = documents[index]
         if len(document) > 0 and not isinstance(document[0], str):
             continue
         document = [word.lower() for word in document]
-        #convertir todas las palabtas del documento en minuscula
+        # convertir todas las palabtas del documento en minuscula
         for queryWord in query:
-            #por cada palabra de la consulta se revisa si esta en un documento
-            #y se agrega la informacion para crear el indice invertido
+            # por cada palabra de la consulta se revisa si esta en un documento
+            # y se agrega la informacion para crear el indice invertido
             if queryWord in document:
                 newOrOldList = invertedIndex[queryWord] if queryWord in invertedIndex else []
-                invertedIndex[queryWord] = newOrOldList + [index+1]
+                timesWordInDocument = [index + 1] * document.count(queryWord)
+                invertedIndex[queryWord] = newOrOldList + timesWordInDocument
 
     return invertedIndex, documents
