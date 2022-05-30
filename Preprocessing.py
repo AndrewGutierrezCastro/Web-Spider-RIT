@@ -72,23 +72,25 @@ def calc_performance(input_file_path):
         print("The key and value are ({})".format(key))
         repeated_elements = [item for item, count in collections.Counter(value).items() if count > 1]
         numbered_list = collections.Counter(value).items()
-        print("KAKAKAKAKAK")
-        print(numbered_list)
-        #print(numbered_list)
         amount_repeated_list = {}
-        for repeated_elemnt in repeated_elements:
-            amount_repeated_list[repeated_elemnt] = numbered_list[repeated_elemnt]
+        #for repeated_elemnt in repeated_elements:
+        #    amount_repeated_list[repeated_elemnt] = numbered_list[repeated_elemnt]
         #print(amount_repeated_list)
         temps[key] = numbered_list
     #Se empieza a etirar sobre el indice
     for temp in temps:
-        frequency = temps[temp]
-        print(frequency)
-        #maxi = 
-        #list_documents =
-        #list_documents_found =
-        #k = 
-        #calc_peso()
+        for temp2 in temps[temp]:
+            frequency = temp2[1]
+            maxi = len(temp2)
+            list_documents = documents
+            list_documents_found = temp2
+            k = 0 # Por default 0, no tiene relevancia si no se utiliza TF: K
+            #Tipo_IDF: unaria,suavizada,maxima,probabilistica,inversa
+            #Tipo_TF: binario, logaritmica, doble, k, frecuencia
+            type_idf = "inversa"
+            type_tf = "logaritmica"
+            peso = calc_peso(type_idf,type_tf,frequency,k,maxi,list_documents,list_documents_found)
+            print(peso)
     #print(data)
     return 0
 
