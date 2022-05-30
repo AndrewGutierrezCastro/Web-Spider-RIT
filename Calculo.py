@@ -1,15 +1,4 @@
-from asyncio.format_helpers import _format_callback_source
 import numpy as np
-import glob
-import os
-
-def calc_idf_hard(list_resultados,extencion):
-    locacion2 = os.getcwd()+"/*."+extencion
-    list_docus =glob.glob(locacion2)
-    cant_docus = len(list_docus)
-    cant_result =len(list_resultados)
-    resultado = np.log2(cant_docus/cant_result)
-    return resultado
 
 '''
     Funcion de calculo de peso, el cual calcula los pesos de un termino en un documento y de un documento en la coleccion
@@ -213,7 +202,3 @@ def calc_idf_inversa_max(cant_doccumentos_encontrado,maxi):
 def calc_idf_inversa_prob(cant_documentos,cant_doccumentos_encontrado):
     resultado = np.log2(( cant_documentos - cant_doccumentos_encontrado ) / cant_doccumentos_encontrado )
     return resultado
-
-
-
-print(calc_idf_hard([2,3,4],"csv"))

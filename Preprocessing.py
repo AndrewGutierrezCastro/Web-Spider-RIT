@@ -2,8 +2,9 @@ import re  # Para la coincidencia de expresiones (regex)
 import json  # Recipiente de archivos
 import RegexPatterns  # Para poder manejar las expresiones del regex
 import pandas as pd  # Para poder manipular los datos de codigo
-
+import collections # Para poder manejar listas grandes
 from invertedIndex import invertIndex
+from Calculo import calc_peso
 
 FILENAME = {"CASE": RegexPatterns.CASEPATTERN,
             "CPU": RegexPatterns.CPUPATTERN,
@@ -62,6 +63,35 @@ def saveFile(fileName, fileContent, mode='w'):
     file.write(fileContent)
     file.close()
 
+def calc_performance(input_file_path):
+    with open(input_file_path, 'r') as j:
+        contents = json.load(j)
+    temps = {}
+    for key in contents:
+        value = contents[key]
+        print("The key and value are ({})".format(key))
+        repeated_elements = [item for item, count in collections.Counter(value).items() if count > 1]
+        numbered_list = collections.Counter(value).items()
+        print("KAKAKAKAKAK")
+        print(numbered_list)
+        #print(numbered_list)
+        amount_repeated_list = {}
+        for repeated_elemnt in repeated_elements:
+            amount_repeated_list[repeated_elemnt] = numbered_list[repeated_elemnt]
+        #print(amount_repeated_list)
+        temps[key] = numbered_list
+    #Se empieza a etirar sobre el indice
+    for temp in temps:
+        frequency = temps[temp]
+        print(frequency)
+        #maxi = 
+        #list_documents =
+        #list_documents_found =
+        #k = 
+        #calc_peso()
+    #print(data)
+    return 0
+
 
 def main():
     print("Preprocessing version 0.1 running....")
@@ -71,6 +101,7 @@ def main():
     saveFile("result.json", jsonFile, "w")
     print(str(totalMatches) + " total matches!!!. The JSON file was writed!!")
     makeInvertedIndex(["ATX", "Mid-tower", "CPU", "8GB", "DDR4"])
+    calc_performance("invertedIndex.json")
 
 if __name__ == '__main__':
     main()
