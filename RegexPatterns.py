@@ -6,4 +6,4 @@ HDDPATTERN = r"\d{1,6}Gb.s|\d{1,6}Gb|rpm|\d{1,6}mb.s|\d{1,6}mb|cache|\d{1,6}tb.s
 PSUPATTERN = r"\d{1,6}w|gold|silver|platinum|titanium|bronze|atx"
 SSDPATTERN = r"\d{1,6}gb.s|\d{1,6}gb|\d{1,6}tb.s|\d{1,6}tb|\d{1,6}mb.s|\d{1,6}mb|cache|nvme|m.\d{1,6}"
 MOTHERBOARDPATTERN = r"amd|intel|lga|fm|micro atx|mini atx|am\d{1,6}"
-RAMPATTERN = r"rgb|\d{1,6}gb|ddr\d{1,6}|(.*?)"
+RAMPATTERN = r"(rgb)|\d{1,6}gb|ddr\d{1,6}|(\((.*?)\))"
