@@ -23,7 +23,6 @@ FILENAME = {"CASE": RegexPatterns.CASEPATTERN,
 FILETYPE = ".csv"
 
 hashmapData = {}
-totalMatches = 0
 documents = []
 # Con ayuda del regex, lo que hace es filtar de una manera mas limpia la informacion de los
 # distintos componentes. Configurada cada una de ellas en el archivo de RegexPatterns
@@ -45,14 +44,13 @@ def load_info():
 
 
 def preprocessing():
-    global hashmapData, totalMatches
+    global hashmapData
     for name in hashmapData.keys():
         data = hashmapData[name]
         descriptionList = data.Desc_Producto.tolist()
         result = []
         for i in descriptionList:
             result.append(denoise_text(i, FILENAME[name]))
-        totalMatches += len(result)
         hashmapData[name] = result
 
 
@@ -130,7 +128,7 @@ def main():
     preprocessing()
     jsonFile = json.dumps(hashmapData, sort_keys=True, indent=4)
     saveFile("result.json", jsonFile, "w")
-    print(str(totalMatches) + " total matches!!!. The JSON file was writed!!")
+    print("The JSON file was writed!!")
     makeInvertedIndex()
     calc_performance("invertedIndex.json","calc_performance",True,True)
 if __name__ == '__main__':

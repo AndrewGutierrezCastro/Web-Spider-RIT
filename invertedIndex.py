@@ -22,6 +22,7 @@ def invertIndex(hashMap={}):
     invertedIndex = {}
     # Generar una lista con todos los documentos
     documents, vocabulary = mergeDocuments(hashMap)
+    print(len(vocabulary), " terms in the vocabulary.")
     # Por cada documento en la lista
     for index in range(len(documents)):
         document = documents[index]
