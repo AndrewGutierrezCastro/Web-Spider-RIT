@@ -56,9 +56,9 @@ def preprocessing():
         hashmapData[name] = result
 
 
-def makeInvertedIndex(query=["ATX", "Mid-Tower"]):
+def makeInvertedIndex():
     global documents
-    invertedIndex, documents = invertIndex(hashmapData, query)
+    invertedIndex, documents = invertIndex(hashmapData)
     fileContent = json.dumps(invertedIndex, sort_keys=True, indent=4)
     saveFile("invertedIndex.json", fileContent)
     print(invertedIndex.keys(), [len(i) for i in invertedIndex.values()])
@@ -131,7 +131,7 @@ def main():
     jsonFile = json.dumps(hashmapData, sort_keys=True, indent=4)
     saveFile("result.json", jsonFile, "w")
     print(str(totalMatches) + " total matches!!!. The JSON file was writed!!")
-    makeInvertedIndex(["ATX", "Mid-tower", "CPU", "8GB", "DDR4"])
+    makeInvertedIndex()
     calc_performance("invertedIndex.json","calc_performance",True,True)
 if __name__ == '__main__':
     main()

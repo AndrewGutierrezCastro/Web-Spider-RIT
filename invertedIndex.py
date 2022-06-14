@@ -1,26 +1,27 @@
 def mergeDocuments(hashMap):
     '''
-    En esta funcion se recibe un hast con todos los documentos
+    En esta funcion se recibe un hash con todos los documentos
     en un diccionario y los pone un una lista uno detras de otro
     '''
     result = []
+    vocabulary = []
     for key in hashMap.keys():
         documents = hashMap[key]
         result = result + documents
-    return result
-    # TODO Christian ordenar lista y aplicar formulas.
+        for document in documents:
+            vocabulary += [ *document ]
+    return result, set(vocabulary)
+    
 
 
-def invertIndex(hashMap={}, query=["ATX", "Mid-Tower"]):
+def invertIndex(hashMap={}):
     '''
     Se recibe el diccionario con los documentos y una lista que trae
     las palabras a consultar
     '''
     invertedIndex = {}
-    # Se deja cada palabra de la consulta en minuscula
-    query = [word.lower() for word in query]
     # Generar una lista con todos los documentos
-    documents = mergeDocuments(hashMap)
+    documents, vocabulary = mergeDocuments(hashMap)
     # Por cada documento en la lista
     for index in range(len(documents)):
         document = documents[index]
@@ -28,12 +29,12 @@ def invertIndex(hashMap={}, query=["ATX", "Mid-Tower"]):
             continue
         document = [word.lower() for word in document]
         # convertir todas las palabtas del documento en minuscula
-        for queryWord in query:
+        for word in vocabulary:
             # por cada palabra de la consulta se revisa si esta en un documento
             # y se agrega la informacion para crear el indice invertido
-            if queryWord in document:
-                newOrOldList = invertedIndex[queryWord] if queryWord in invertedIndex else []
-                timesWordInDocument = [index + 1] * document.count(queryWord)
-                invertedIndex[queryWord] = newOrOldList + timesWordInDocument
+            if word in document:
+                newOrOldList = invertedIndex[word] if word in invertedIndex else []
+                timesWordInDocument = [index + 1] * document.count(word)
+                invertedIndex[word] = newOrOldList + timesWordInDocument
 
     return invertedIndex, documents
