@@ -202,3 +202,20 @@ def calc_idf_inversa_max(cant_doccumentos_encontrado,maxi):
 def calc_idf_inversa_prob(cant_documentos,cant_doccumentos_encontrado):
     resultado = np.log2(( cant_documentos - cant_doccumentos_encontrado ) / cant_doccumentos_encontrado )
     return resultado
+
+
+'''
+    Funcion de Calculo de Similitud entre un documento y la consulta.
+    vector_documento: Un vector con los pesos de los terminos del documento.
+    vector_consulta: Un vector con los pesos de los terminos de la consulta.
+    Args:vector_documento(<Vec>), vector_consulta(<Vec>)
+    Return: Int
+'''
+def calc_sim(vector_documento, vector_consulta):
+    tam_vec_docu = len(vector_documento)
+    tam_vec_cons = len(vector_consulta)
+    if tam_vec_docu != tam_vec_cons:
+        resultado = 0.0
+    else:
+        resultado = np.dot(vector_documento,vector_consulta) / (tam_vec_cons*tam_vec_docu)
+    return resultado
