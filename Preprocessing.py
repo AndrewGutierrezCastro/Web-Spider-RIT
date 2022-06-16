@@ -1,13 +1,14 @@
 import re  # Para la coincidencia de expresiones (regex)
 import json # Para manejo de la estructra Json
 from sqlite3 import SQLITE_CREATE_TEMP_VIEW
+import base64 #Para encodificar a binario
 
 from sqlalchemy import false  # Recipiente de archivos
 import RegexPatterns  # Para poder manejar las expresiones del regex
 import pandas as pd  # Para poder manipular los datos de codigo
 import collections # Para poder manejar listas grandes
 from word2number import w2n # Para poder guardar strings a enteros.
-from os.path import exists # Para verificar si un archivo existe
+from os.path import exists,getsize # Para verificar si un archivo existe y Obtener el tamaño de un archivo.
 from invertedIndex import invertIndex
 from Calculo import calc_peso
 
@@ -88,8 +89,9 @@ def calc_performance(input_file_path,save_file_path = "calc_performance",verbose
         temps[key] = numbered_list
     #Se empieza a etirar sobre el indice
     byte_content = []
-    verbose_content = ""
+    verbose_content_total = {"total_index":[]}
     for temp in temps:
+        verbose_content = {"tag": temp, "matches":[]}
         for temp2 in temps[temp]:
             frequency = temp2[1]
             maxi = len(temp2)
@@ -101,24 +103,25 @@ def calc_performance(input_file_path,save_file_path = "calc_performance",verbose
             type_idf = "inversa"
             type_tf = "logaritmica"
             peso = calc_peso(type_idf,type_tf,frequency,k,maxi,list_documents,list_documents_found)
-            byte_tag = bytes(temp, 'utf-8')
-            byte_doc_id = bytes(temp2[0])
-            byte_peso = bytes(peso)
-            byte_frequency = bytes(frequency)
-            byte_maxi = bytes(maxi)
-            byte_k = bytes(k)
-            byte_len_docs = bytes(len(list_documents))
-            byte_len_found_docs = bytes(len(list_documents_found))
-            buffer_bytes = [byte_tag,byte_doc_id,byte_peso,byte_frequency,byte_maxi,byte_k, byte_len_docs, byte_len_found_docs]
-            byte_content.extend(buffer_bytes)
-            verbose = "Tag: "+temp+" Doc_id: "+str(temp2[0])+" Peso: "+str(peso)+" Freq: "+str(frequency)+" Maxi: "+str(maxi) + " Doc: "+str(len(list_documents))+" Doc_Found: "+str(len(list_documents_found))+"\n"
-            verbose_content = verbose_content + verbose
-    fileByteArray = b"".join(byte_content)
-    print("Saved " + str(len(byte_content))+ " Bytes on "+save_file_path)
-    saveFile(save_file_path,fileByteArray,"wb")
+            verbose = {
+                "doc_id": temp2[0], 
+                "peso":peso, 
+                "freq":frequency, 
+                "maxi":maxi, 
+                "cant_doc":len(list_documents),
+                "cant_doc_found":len(list_documents_found)
+                }
+            verbose_content["matches"].append(verbose)
+        verbose_content_total["total_index"].append(verbose_content)
+    jsondump = json.dumps(verbose_content_total, indent=4)
+    #saveFile(save_file_path,verbose_content_total,"wb")
+    bin_json = base64.b64decode(jsondump)
+    saveFile(save_file_path,bin_json,"wb")
+    file_size = getsize(save_file_path)
+    print("Saved " + str(file_size)+ " Bytes on "+save_file_path)
     if verbose:
-        saveFile(save_file_path+"_verbose.txt",verbose_content)
-        print("Saved Verbose File")
+        saveFile(save_file_path+"_verbose.json",jsondump)
+        print("Saved Verbose File size: "+str(getsize(save_file_path+"_verbose.json"))+" Bytes")
     return
 
 
@@ -130,6 +133,6 @@ def main():
     saveFile("result.json", jsonFile, "w")
     print("The JSON file was writed!!")
     makeInvertedIndex()
-    calc_performance("invertedIndex.json","calc_performance",True,True)
+    calc_performance("invertedIndex.json","calc_pesos",True,True)
 if __name__ == '__main__':
     main()
