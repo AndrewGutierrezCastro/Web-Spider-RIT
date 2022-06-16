@@ -25,6 +25,7 @@ FILETYPE = ".csv"
 
 hashmapData = {}
 documents = []
+documentsFullData = []
 # Con ayuda del regex, lo que hace es filtar de una manera mas limpia la informacion de los
 # distintos componentes. Configurada cada una de ellas en el archivo de RegexPatterns
 
@@ -39,6 +40,11 @@ def load_info():
     for name in FILENAME.keys():
         data = pd.read_csv(name + FILETYPE)
         hashmapData[name] = data
+        columns = data.columns.to_list()
+        for document in data.itertuples():
+            document = list(document) 
+            document = dict(zip(columns, document[1:5]))
+            documentsFullData.append(document)
 
 # Ya estando los archivos cargados en el hashmap, se encarga de
 # aplicar la funcion del denoise_text
@@ -58,9 +64,12 @@ def preprocessing():
 def makeInvertedIndex():
     global documents
     invertedIndex, documents = invertIndex(hashmapData)
+    jsonFile = json.dumps(documents, sort_keys=True, indent=4)
+    saveFile("documents.json", jsonFile, "w")
+    jsonFile = json.dumps(documentsFullData, sort_keys=True, indent=4)
+    saveFile("documentsFullData.json", jsonFile, "w")
     fileContent = json.dumps(invertedIndex, sort_keys=True, indent=4)
     saveFile("invertedIndex.json", fileContent)
-    print(invertedIndex.keys(), [len(i) for i in invertedIndex.values()])
 
 # Is used to save file on the file system
 def saveFile(fileName, fileContent, mode='w'):
