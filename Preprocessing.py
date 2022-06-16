@@ -29,12 +29,22 @@ documentsFullData = []
 # Con ayuda del regex, lo que hace es filtar de una manera mas limpia la informacion de los
 # distintos componentes. Configurada cada una de ellas en el archivo de RegexPatterns
 
-
+'''
+    Funcion para aplicar elementos de regEx a un string.
+    stringWords: Una lista de palabras para aplicar el regEx
+    regexPattern: Una lista con los patrones de RegEx
+    Args: stringWords(Str),regexPattern(Str)
+    Return: String
+'''
 def denoise_text(stringWords, regexPattern):
     return re.findall(regexPattern, stringWords, re.IGNORECASE)
 # Carga la info de cada componente en el hashmap
 
-
+'''
+    Funcion para cargar toda la informacion necesaria a memoria.
+    Args: None
+    Return: None
+'''
 def load_info():
     global hashmapData
     for name in FILENAME.keys():
@@ -49,7 +59,11 @@ def load_info():
 # Ya estando los archivos cargados en el hashmap, se encarga de
 # aplicar la funcion del denoise_text
 
-
+'''
+    Funcion para eliminar varios elementos basura de nuestro modelo.
+    Args: None
+    Return: None
+'''
 def preprocessing():
     global hashmapData
     for name in hashmapData.keys():
@@ -60,7 +74,11 @@ def preprocessing():
             result.append(denoise_text(i, FILENAME[name]))
         hashmapData[name] = result
 
-
+'''
+    Funcion para crear un indice invertido y lo guarda en un formato json.
+    Args: None
+    Return: None
+'''
 def makeInvertedIndex():
     global documents
     invertedIndex, documents = invertIndex(hashmapData)
@@ -71,18 +89,33 @@ def makeInvertedIndex():
     fileContent = json.dumps(invertedIndex, sort_keys=True, indent=4)
     saveFile("invertedIndex.json", fileContent)
 
-# Is used to save file on the file system
+'''
+    Funcion para escritura de contenido en archivos.
+    fileContent: Variable que guarda el contenido que se quiere escribir.
+    fileName: Variable que guarda la locacion donde se quiere guardar el archivo.
+    mode: Variagle que guarda el tipo de escritura que se requiere.
+    Args:fileName(Str), fileContent(Str),mode(Str)
+    Return: None
+'''
 def saveFile(fileName, fileContent, mode='w'):
     file = open(fileName, mode)
     file.write(fileContent)
     file.close()
 
-# Is used to calculate the performance of the index and to save it on the file system
-def calc_performance(input_file_path,save_file_path = "calc_performance",verbose = false,override = false):
+'''
+    Funcion para el Calculo de pesos de los terminos en los archivos.
+    input_file_path: Variable que guarda la locacion donde se encuentra el indice del vocabulario.
+    save_file_path: Variable que guarda la locacion donde se quiere guardar el archivo binario
+    verbose: Variable para verificar si la funcion ocupa crear un archivo .json
+    override: Variable para verificar si la funcion omite el archivo ya guardado.
+    Args:input_file_path(Str), save_file_path(Str),verbose(Bool),override(Bool)
+    Return: JsonObject
+'''
+def calc_pesos(input_file_path,save_file_path = "calc_pesos",verbose = false,override = false):
     if override:
-        print("Override activated, remaking Performance Calculations!")
+        print("Override activated, remaking Vector Weight Calculations!")
     if exists(save_file_path) and not(override):
-        print("File "+save_file_path+" exist calc_performance skipped!")
+        print("File "+save_file_path+" exist calc_pesos skipped!")
         return
     with open(input_file_path, 'r') as j:
         contents = json.load(j)
@@ -142,6 +175,6 @@ def main():
     saveFile("result.json", jsonFile, "w")
     print("The JSON file was writed!!")
     makeInvertedIndex()
-    calc_performance("invertedIndex.json","calc_pesos",True,True)
+    calc_pesos("invertedIndex.json","calc_pesos",True,True)
 if __name__ == '__main__':
     main()
