@@ -11,6 +11,7 @@ from word2number import w2n # Para poder guardar strings a enteros.
 from os.path import exists,getsize # Para verificar si un archivo existe y Obtener el tamaño de un archivo.
 from invertedIndex import invertIndex
 from Calculo import calc_peso
+from vectors import getVectorsFromFile
 
 
 FILENAME = {"CASE": RegexPatterns.CASEPATTERN,
@@ -177,5 +178,6 @@ def main():
     print("The JSON file was writed!!")
     makeInvertedIndex()
     calc_pesos("invertedIndex.json","calc_pesos",True,True)
+    vectorsCollection = getVectorsFromFile("calc_pesos_verbose.json")
 if __name__ == '__main__':
     main()
