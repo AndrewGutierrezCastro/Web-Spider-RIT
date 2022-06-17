@@ -54,7 +54,7 @@ def load_info():
         columns = ["index"] + data.columns.to_list()
         for document in data.itertuples():
             document = list(document) 
-            document = dict(zip(columns, [index] + document[1:5]))
+            document = dict(zip(columns, [ index + 1 ] + document[1:5]))
             documentsFullData.append(document)
             index += 1
 # Ya estando los archivos cargados en el hashmap, se encarga de
@@ -158,7 +158,7 @@ def calc_pesos(input_file_path,save_file_path = "calc_pesos",verbose = false,ove
         verbose_content_total["total_index"].append(verbose_content)
     jsondump = json.dumps(verbose_content_total, indent=4)
     #saveFile(save_file_path,verbose_content_total,"wb")
-    bin_json = base64.b64decode(jsondump)
+    bin_json = base64.b64decode(jsondump + str(b'=='))
     saveFile(save_file_path,bin_json,"wb")
     file_size = getsize(save_file_path)
     print("Saved " + str(file_size)+ " Bytes on "+save_file_path)

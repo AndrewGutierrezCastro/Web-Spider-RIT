@@ -9,7 +9,8 @@ def mergeDocuments(hashMap):
         documents = hashMap[key]
         result = result + documents
         for document in documents:
-            vocabulary += [ *document ]
+            document = [word.lower() for word in document]
+            vocabulary += document
     return result, set(vocabulary)
     
 
@@ -29,6 +30,7 @@ def invertIndex(hashMap={}):
     for index in range(len(documents)):
         document = documents[index]
         if len(document) > 0 and not isinstance(document[0], str):
+            print(document)
             continue
         document = [word.lower() for word in document]
         # convertir todas las palabtas del documento en minuscula
