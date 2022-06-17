@@ -5,14 +5,14 @@ from vectors import getVectorsFromFile
 from vectors import getVectorsFromKeys
 from Calculo import calc_sim
 
-def openFile():
-    f = open("calc_pesos_verbose.json",'r',encoding='utf-8')
+def openFile(name):
+    f = open(name,'r',encoding='utf-8')
     data = json.loads(f.read())
     f.close()
     return data
 
 def getDocs(query):
-    data = openFile()
+    data = openFile("calc_pesos_verbose.json")
     documents = []
     total_index = data["total_index"]
     for term in query:
@@ -23,7 +23,7 @@ def getDocs(query):
     return documents
 
 
-def query(queryStr : str):
+def getDocsSortedByWeight(queryStr):
     queryLst = queryStr.split(",")
     documents = getDocs(queryLst)
     df = pandas.DataFrame(documents)
@@ -33,19 +33,33 @@ def query(queryStr : str):
 def calculo_similitud(vector1, vector2):
     similitud = []
     for v in vector1:
-        similitud.append(calc_sim(v,queryWeightVector))
+        similitud.append(calc_sim(v,vector2))
     return similitud
 
-vectorsCollection = getVectorsFromFile("calc_pesos_verbose.json")
-queryResult = query("atx,8gb,mid-tower,tempered glass")
-queryWeightVector = queryResult["peso"].tolist()
-queryDocumentIdList = queryResult["doc_id"].tolist()
-v = getVectorsFromKeys(vectorsCollection,queryDocumentIdList)
-#print(queryResult)
-#print(queryWeightVector[:2])
-#print(queryDocumentIdList)
-#print(vectorsCollection)
-#print(v)
-similitud = calculo_similitud(v,queryWeightVector)
-print(similitud)
-#calc_sim(queryResult["peso"])
+def getDocsWithAllData(docs_Ids : list):
+    data = openFile("documentsFullData.json")
+    documents = {}
+    docs_finded = []
+    for doc in data:
+        if doc["index"] in docs_Ids and doc["index"] not in docs_finded :
+            docs_finded.append(doc["index"])
+            documents[doc["index"]] = doc
+    result = []
+    for id in docs_Ids:
+        result.append(documents[id])
+    return result
+
+
+def query(queryStr):
+    vectorsCollection = getVectorsFromFile("calc_pesos_verbose.json")
+    queryResult = getDocsSortedByWeight(queryStr)
+    queryWeightVector = queryResult["peso"].tolist()
+    queryDocumentIdList = queryResult["doc_id"].tolist()
+    v = getVectorsFromKeys(vectorsCollection,queryDocumentIdList)
+    similitud = calculo_similitud(v,queryWeightVector)
+    queryResult["similitud"] = similitud
+    queryResult = queryResult.sort_values(by='similitud', ascending=False)
+    documentsFullData = getDocsWithAllData(list(queryResult["doc_id"]))
+    return documentsFullData, queryResult
+
+query("atx,8gb,mid-tower,tempered glass")
