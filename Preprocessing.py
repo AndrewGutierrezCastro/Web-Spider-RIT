@@ -46,16 +46,17 @@ def denoise_text(stringWords, regexPattern):
     Return: None
 '''
 def load_info():
-    global hashmapData
+    global hashmapData, documentsFullData
+    index = 0
     for name in FILENAME.keys():
         data = pd.read_csv(name + FILETYPE)
         hashmapData[name] = data
-        columns = data.columns.to_list()
+        columns = ["index"] + data.columns.to_list()
         for document in data.itertuples():
             document = list(document) 
-            document = dict(zip(columns, document[1:5]))
+            document = dict(zip(columns, [index] + document[1:5]))
             documentsFullData.append(document)
-
+            index += 1
 # Ya estando los archivos cargados en el hashmap, se encarga de
 # aplicar la funcion del denoise_text
 

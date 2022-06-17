@@ -23,6 +23,8 @@ def invertIndex(hashMap={}):
     # Generar una lista con todos los documentos
     documents, vocabulary = mergeDocuments(hashMap)
     print(len(vocabulary), " terms in the vocabulary.")
+    print(len(documents), " documents in the collection.")
+    
     # Por cada documento en la lista
     for index in range(len(documents)):
         document = documents[index]
@@ -37,5 +39,4 @@ def invertIndex(hashMap={}):
                 newOrOldList = invertedIndex[word] if word in invertedIndex else []
                 timesWordInDocument = [index + 1] * document.count(word)
                 invertedIndex[word] = newOrOldList + timesWordInDocument
-
     return invertedIndex, documents
