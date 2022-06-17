@@ -23,6 +23,13 @@ def getVectorsFromFile(filepath):
                 vectorsDocumentos.update({id:peso})
     return vectorsDocumentos
 
+def getVectorsFromKeys(vector,keys):
+    vectors = []
+    for key in keys:
+        vectors.append(vector.get(key))
+    return vectors
+
+
 vec = getVectorsFromFile("calc_pesos_verbose.json")
 
 #for key in vec:

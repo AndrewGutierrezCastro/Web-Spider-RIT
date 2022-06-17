@@ -214,8 +214,14 @@ def calc_idf_inversa_prob(cant_documentos,cant_doccumentos_encontrado):
 def calc_sim(vector_documento, vector_consulta):
     tam_vec_docu = len(vector_documento)
     tam_vec_cons = len(vector_consulta)
-    if tam_vec_docu != tam_vec_cons:
-        resultado = 0.0
-    else:
-        resultado = np.dot(vector_documento,vector_consulta) / (tam_vec_cons*tam_vec_docu)
+    vector_documento = np.positive(vector_documento)
+    vector_consulta = np.positive(vector_consulta)
+    if tam_vec_docu > tam_vec_cons:
+        vector_documento = vector_documento[:tam_vec_cons]
+    elif tam_vec_docu < tam_vec_cons:
+        vector_consulta = vector_consulta[:tam_vec_docu]
+    #resultado = np.dot(vector_documento,vector_consulta)
+    #resultado = np.dot(vector_documento,vector_consulta) / (tam_vec_cons*tam_vec_docu)
+    resultado = np.dot(vector_documento,vector_consulta) / (sum(vector_consulta) * sum(vector_documento))
+    
     return resultado
